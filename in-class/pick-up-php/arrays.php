@@ -5,15 +5,17 @@
 <head>
 
 	<?php
-	$contestants['Susan']  = "";
-	$contestants['Cruz']   = "";
-	$contestants['Vivian'] = "";
 	
-	$winning_number = rand(1,3);
+	# What did we get from the form?
+	print_r($_POST);
 	
-	foreach($contestants as $key=> $contestant) {
+	$contestants = "";
 		
-		$random_number = rand(1,3);
+	$winning_number = rand(1,sizeof($contestants));
+	
+	foreach($_POST as $key => $winner_or_loser) {
+		
+		$random_number = rand(1,sizeof($contestants));
 		
 		if($random_number == $winning_number) {
 			$contestants[$key] = "Winner";
@@ -32,8 +34,18 @@
 
 <body>
 
+	<form method='POST' action='arrays.php'>
+		
+		<input type='text' name='contestant1'><br>
+		<input type='text' name='contestant2'><br>
+		<input type='text' name='contestant3'><br>
+	
+		<input type='Submit'>
+	
+	</form>
+
 	<? foreach($contestants as $key => $winner_or_loser): ?>
-		<?=$key?> is a <?=$winner_or_loser?><br>
+		<?=$_POST[$key]?> is a <?=$winner_or_loser?><br>
 	<? endforeach; ?>	
 	
 </body>
