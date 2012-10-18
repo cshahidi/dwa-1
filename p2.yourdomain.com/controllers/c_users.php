@@ -24,7 +24,7 @@ class users_controller extends base_controller {
 	public function p_signup() {
 	
 		# What data was submitted
-		print_r($_POST);
+		//print_r($_POST);
 		
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 		$_POST['created']  = Time::now(); # This returns the current timestamp
@@ -35,7 +35,7 @@ class users_controller extends base_controller {
 		# Put the data in the database
 		DB::instance(DB_NAME)->insert('users', $_POST);
 		
-		echo "You are registered!";
+		echo "You're registered! Now go <a href='/users/login'>login</a>";
 	
 	}
 	
@@ -87,9 +87,7 @@ class users_controller extends base_controller {
 			return;
 		}
 		
-		echo $this->user->first_name;		
-				
-				
+							
 		if($user_name == NULL) {
 			echo "You did not specify a user";
 		} else {
