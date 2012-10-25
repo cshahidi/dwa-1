@@ -64,6 +64,12 @@ class posts_controller extends base_controller {
 	
 	}
 	
+	public function unfollow($user_id_followed = NULL) {
+	
+		
+	
+	}
+	
 	
 	public function add() {
 	
