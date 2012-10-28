@@ -6,6 +6,12 @@ class users_controller extends base_controller {
 	public function __construct() {
 		parent::__construct();
 	}
+	
+	public function generate_password($password) {
+				
+		echo sha1(PASSWORD_SALT.$password);
+	
+	}
 
 
 	/*-------------------------------------------------------------------------------------------------
@@ -84,7 +90,7 @@ class users_controller extends base_controller {
 		
 		# Login failed
 		if($token == "") {
-			//Router::redirect("/users/login");
+			Router::redirect("/users/login");
 		}
 		# Login passwed
 		else {
