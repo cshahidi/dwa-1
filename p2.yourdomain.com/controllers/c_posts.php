@@ -11,7 +11,7 @@ class posts_controller extends base_controller {
 		}
 	
 	}
-	
+		
 	public function index() {
 	
 		# Set up the view
@@ -22,7 +22,7 @@ class posts_controller extends base_controller {
 		$q = "SELECT *
 			FROM users_users
 			WHERE user_id = ".$this->user->user_id;
-			
+				
 		$connections = DB::instance(DB_NAME)->select_rows($q);
 		
 		$connections_string = "";
@@ -39,8 +39,7 @@ class posts_controller extends base_controller {
 			FROM posts
 			JOIN users USING(user_id)
 			WHERE posts.user_id IN (".$connections_string.")";
-			
-			
+					
 		$posts = DB::instance(DB_NAME)->select_rows($q);
 		 
 		# Pass data to the view
@@ -50,6 +49,37 @@ class posts_controller extends base_controller {
 		echo $this->template;
 	
 	}
+	
+
+	/*-------------------------------------------------------------------------------------------------
+	This method exists just for testing. It's the same as above (index), but is testing out a different
+	query method.
+	See: http://forum.susanbuck.net/discussion/160/sql-query-with-multiple-tables
+	-------------------------------------------------------------------------------------------------*/
+	public function index2() {
+		
+		# Set up the view
+		$this->template->content = View::instance("v_posts_index");
+		$this->template->title   = "All the posts";
+	
+		$q = "SELECT posts.*, users.first_name, users.last_name
+				FROM posts
+				LEFT JOIN users 
+					ON posts.user_id = users.user_id
+				LEFT JOIN users_users
+					ON users.user_id = users_users.user_id_followed
+				WHERE users_users.user_id = ".$this->user->user_id;
+								
+		$posts = DB::instance(DB_NAME)->select_rows($q);
+		 
+		# Pass data to the view
+		$this->template->content->posts = $posts;
+			
+		# Render the view
+		echo $this->template;
+	
+	}
+
 	
 	public function users() {
 	
