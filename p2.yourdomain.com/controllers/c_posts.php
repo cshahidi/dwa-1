@@ -18,9 +18,28 @@ class posts_controller extends base_controller {
 		$this->template->content = View::instance("v_posts_index");
 		$this->template->title   = "All the posts";
 	
+		# Figure out the connections
+		$q = "SELECT *
+			FROM users_users
+			WHERE user_id = ".$this->user->user_id;
+			
+		$connections = DB::instance(DB_NAME)->select_rows($q);
+		
+		$connections_string = "";
+		
+		foreach($connections as $k => $v) {
+			$connections_string .= $v['user_id_followed'].",";
+		}
+		
+		# Trim off the last comma
+			$connections_string = substr($connections_string, 0, -1);
+		
+		# Grab all the posts
 		$q = "SELECT *
 			FROM posts
-			JOIN users USING(user_id)";
+			JOIN users USING(user_id)
+			WHERE posts.user_id IN (".$connections_string.")";
+			
 			
 		$posts = DB::instance(DB_NAME)->select_rows($q);
 		 
@@ -43,7 +62,18 @@ class posts_controller extends base_controller {
 		
 		$users = DB::instance(DB_NAME)->select_rows($q);
 		
+		# Figure out the connections
+		$q = "SELECT * 
+			FROM users_users 
+			WHERE user_id = ".$this->user->user_id;
+		
+		$connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
+		
+		echo Debug::dump($connections,"connections");
+		
+	
 		# Pass data to the view
+		$this->template->content->connections = $connections;
 		$this->template->content->users = $users;
 		
 		# Render the view
@@ -66,6 +96,12 @@ class posts_controller extends base_controller {
 	
 	public function unfollow($user_id_followed = NULL) {
 	
+		$where_condition = "WHERE user_id_followed =".$user_id_followed." 
+							AND user_id= ".$this->user->user_id;
+	
+		DB::instance(DB_NAME)->delete("users_users", $where_condition);
+		
+		Router::redirect('/posts/users');
 		
 	
 	}
