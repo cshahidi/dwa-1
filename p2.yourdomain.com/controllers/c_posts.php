@@ -22,6 +22,8 @@ class posts_controller extends base_controller {
 		$q = "SELECT *
 			FROM users_users
 			WHERE user_id = ".$this->user->user_id;
+			
+		echo $q."<br>";
 				
 		$connections = DB::instance(DB_NAME)->select_rows($q);
 		
@@ -39,6 +41,8 @@ class posts_controller extends base_controller {
 			FROM posts
 			JOIN users USING(user_id)
 			WHERE posts.user_id IN (".$connections_string.")";
+		
+		echo $q."<br>";
 					
 		$posts = DB::instance(DB_NAME)->select_rows($q);
 		 
@@ -69,6 +73,8 @@ class posts_controller extends base_controller {
 				LEFT JOIN users_users
 					ON users.user_id = users_users.user_id_followed
 				WHERE users_users.user_id = ".$this->user->user_id;
+				
+			echo $q;
 								
 		$posts = DB::instance(DB_NAME)->select_rows($q);
 		 
@@ -77,6 +83,38 @@ class posts_controller extends base_controller {
 			
 		# Render the view
 		echo $this->template;
+	
+	}
+	
+	
+	/*-------------------------------------------------------------------------------------------------
+	
+	-------------------------------------------------------------------------------------------------*/
+	public function index3() {
+	
+		# Set up the view
+		$this->template->content = View::instance("v_posts_index");
+		$this->template->title   = "All the posts";
+
+	
+		$q = "SELECT * 
+			FROM posts p, users u 
+			WHERE p.user_id = u.user_id 
+			AND p.user_id in (
+				SELECT uu.user_id_followed 
+				FROM users_users uu 
+				WHERE uu.user_id=".$this->user->user_id.")";
+				
+			echo $q;
+			
+		$posts = DB::instance(DB_NAME)->select_rows($q);
+		 
+		# Pass data to the view
+		$this->template->content->posts = $posts;
+			
+		# Render the view
+		echo $this->template;
+			
 	
 	}
 
