@@ -37,6 +37,14 @@
 		<br>
 		
 		<h2>Add some graphics</h2>
+		<img src='/images/graphic_burst.png' class='graphic-choice'>
+		<img src='/images/graphic_gift_2.png' class='graphic-choice'>
+		<img src='/images/graphic_gift_3.png' class='graphic-choice'>
+		<br>
+		<img src='/images/graphic_gift.png' class='graphic-choice'>
+		<img src='/images/graphic_heart.png' class='graphic-choice'>
+		<img src='/images/graphic_star.png' class='graphic-choice'>
+		
 	</div>
 	
 	<!-- CARD SETTINGS ON THE RIGHT -->

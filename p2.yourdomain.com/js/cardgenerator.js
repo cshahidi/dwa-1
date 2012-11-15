@@ -50,6 +50,18 @@ $(document).ready(function() { // start doc ready; do not delete this!
 		$('#recipient-output').html(recipient);
 	
 	});
+	
+	$('.graphic-choice').click(function() {
+	
+		var image = $(this).attr('src');
+		
+		var full_image = "<img class='draggable' src='" + image + "'>";
+		
+		$('#canvas').prepend(full_image);		
+		
+		$(".draggable").draggable({ containment: "#canvas" });
+	
+	});
 		
 					
 }); // end doc ready; do not delete this!
