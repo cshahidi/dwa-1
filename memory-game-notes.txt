@@ -1,0 +1,73 @@
+/*-------------------------------------------------------------------------------------------------
+Notes we came up with in class
+-------------------------------------------------------------------------------------------------*/
+CSS for layout
+Static HTML for the card game
+Cards
+	JS to generate cards for me
+	for loop … start at 0, go to how many cards
+		Array of letters A-Z
+		Random letter from the array 
+		Choose each letter twice
+		Shuffle the deck
+		Keep track of our cards…store in array
+		* Do we want only unique pairs?
+		
+
+Flipping cards
+	Two classes, one for up, one for down
+	Up: Font color black
+	Down: Font color yellow
+	* Flip state
+
+A way to compare the cards
+Find a match, 
+	Increment points
+	Inject points into the scoreboard
+Make those two cards go away 
+	.css('display', 'none')
+	.hide('slow');
+
+
+
+/*-------------------------------------------------------------------------------------------------
+Notes came up with to create the game
+-------------------------------------------------------------------------------------------------*/
+Memory Game
+
+Setup - Create the cards on the page
+	1. Create a div on the page where we'll put the cards
+	2. Create a div on the page where we'll put the score
+	
+	Ideally we dynamically generate the cards so we can have a little or a lot
+	for loop…PHP or JS
+
+	Assign pairs of cards
+	1st card, assign a random letter
+	2nd card, assign that same random letter
+	3rd card, assign a new random letter
+	4th card, assign that same random letter
+	
+	How do we pick the random letter?
+	Create an array of the alphabet and randomly pick out of there 
+
+	Look up "shuffle array"
+
+
+How do we create the cards up vs cards down?
+	Card up - Font color is black
+	Card down - Font color matches background
+	Not actually flipping it over, just need to mimic this
+
+Listeners
+	User clicking on the card
+	If a card is up, don't let it be clickable
+	Keep a count of how many cards are flipped…When there are 2 flip them back down
+
+Check for card match
+	Compare this card to the last card
+	How do we figure out the last card? 
+		- Create a variable to store "last card"
+		- Look for the other card with the class "flipped"
+	If we have a match, increment points…Display in scoreboard
+
